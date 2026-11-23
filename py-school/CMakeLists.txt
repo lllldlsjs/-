@@ -52,9 +52,30 @@ set_target_properties(pyschool_helpers PROPERTIES
 find_program(JAVAC_EXECUTABLE NAMES javac)
 find_program(JAR_EXECUTABLE   NAMES jar)
 
+# Проверка работоспособности JDK: в Debian/Ubuntu бывают «битые» симлинки
+# /usr/bin/javac из пакета headless без libjli.so. Если javac не запускается —
+# считаем Java недоступным и пропускаем цель (сайт работает с Python-фолбэком).
+set(JAVA_USABLE FALSE)
 if(JAVAC_EXECUTABLE AND JAR_EXECUTABLE)
-    message(STATUS "Java найден: ${JAVAC_EXECUTABLE} — цель 'java' включена")
+    execute_process(COMMAND ${JAVAC_EXECUTABLE} -version
+                    OUTPUT_QUIET ERROR_QUIET
+                    RESULT_VARIABLE _javac_rc)
+    if(_javac_rc EQUAL 0)
+        set(JAVA_USABLE TRUE)
+        message(STATUS "Java найден и работоспособен: ${JAVAC_EXECUTABLE} — цель 'java' включена")
+    else()
+        message(WARNING "Найден ${JAVAC_EXECUTABLE}, но он не запускается "
+                        "(например, сломанный пакет JDK / отсутствует libjli.so). "
+                        "Пропускаем сборку Java-модуля — сайт будет использовать "
+                        "Python-фолбэк. Установите полный JDK (openjdk-*-jdk), "
+                        "чтобы включить Java-цель.")
+    endif()
+else()
+    message(STATUS "Java (javac/jar) НЕ найден — пропуск сборки Java-модуля "
+                   "(сайт будет использовать Python-фолбэк)")
+endif()
 
+if(JAVA_USABLE)
     add_custom_target(java ALL
         COMMENT "[Java] Компиляция Main.java и упаковка pyschool_utils.jar"
         COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/java-classes"
@@ -65,9 +86,6 @@ if(JAVAC_EXECUTABLE AND JAR_EXECUTABLE)
                 --main-class Main
                 -C "${CMAKE_BINARY_DIR}/java-classes" .
         BYPRODUCTS "${CMAKE_BINARY_DIR}/pyschool_utils.jar")
-else()
-    message(STATUS "Java (javac/jar) НЕ найден — пропуск сборки Java-модуля "
-                   "(сайт будет использовать Python-фолбэк)")
 endif()
 
 # ---------------------------------------------------------------------------
