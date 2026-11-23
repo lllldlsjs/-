@@ -1,0 +1,76 @@
+<h1>🧑‍🏫 Кабинет учителя</h1>
+
+<div class="grid-2">
+  <!-- Настройки курсов -->
+  <section class="card">
+    <h2>⚙️ Настройки курсов</h2>
+    {%for course in courses%}
+    <form class="course-form" method="post" action="/teacher/course/update">
+      <input type="hidden" name="course_id" value="{{course.id}}">
+      <label>Название
+        <input type="text" name="title" value="{{course.title}}" required>
+      </label>
+      <label>Описание
+        <textarea name="description" rows="2">{{course.description}}</textarea>
+      </label>
+      <label class="check"><input type="checkbox" name="enabled" checked> Курс опубликован</label>
+      <div class="row">
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <button type="submit" class="btn btn-danger" formaction="/teacher/course/delete"
+                onclick="return confirm('Удалить курс вместе с уроками и оценками?')">Удалить</button>
+      </div>
+    </form>
+    {%endfor%}
+
+    <h3>Новый курс</h3>
+    <form method="post" action="/teacher/course/new">
+      <label>Название<input type="text" name="title" placeholder="Например: Списки в Python" required></label>
+      <label>Описание<textarea name="description" rows="2"></textarea></label>
+      <button type="submit" class="btn btn-primary">Создать курс</button>
+    </form>
+  </section>
+
+  <!-- Выставление оценок -->
+  <section class="card">
+    <h2>⭐ Выставление оценок</h2>
+    <table class="table">
+      <tr>
+        <th>Студент</th>
+        {%for course in courses%}<th>{{course.title}}</th>{%endfor%}
+      </tr>
+      {%for row in rows%}
+      <tr>
+        <td class="student-cell"><b>{{row.name}}</b><br><small class="muted">{{row.group}} · логин {{row.login}}</small>
+          <input type="hidden" name="student_id" value="{{row.id}}"></td>
+        {%for cell in row.cells%}
+        <td>
+          <input class="grade-input" type="number" min="1" max="5" step="1" style="width:56px"
+                 data-course="{{cell.course_id}}" value="{{cell.grade}}" placeholder="—">
+          <input class="comment-input" type="text" style="width:110px"
+                 data-course="{{cell.course_id}}" value="{{cell.comment}}" placeholder="Комментарий">
+        </td>
+        {%endfor%}
+      </tr>
+      {%endfor%}
+    </table>
+    <button id="save-grades" class="btn btn-primary">💾 Сохранить все оценки</button>
+    <span id="save-status" class="muted small"></span>
+    <p class="muted small">Оценки (1–5) сохраняются по кнопке «Сохранить все оценки».</p>
+  </section>
+</div>
+
+<!-- Управление уроками -->
+<section class="card">
+  <h2>📚 Управление уроками</h2>
+  {%for course in courses%}
+  <h3>{{course.title}}</h3>
+  <form method="post" action="/teacher/lesson/new" class="lesson-form">
+    <input type="hidden" name="course_id" value="{{course.id}}">
+    <label>Заголовок урока<input type="text" name="title" required></label>
+    <label>Конспект<textarea name="content" rows="4" placeholder="Текст урока…"></textarea></label>
+    <button type="submit" class="btn btn-primary">Добавить урок</button>
+  </form>
+  {%endfor%}
+</section>
+
+<p class="muted small">Ссылка на C#-панель статуса: <a href="http://localhost:8081/" target="_blank">http://localhost:8081/</a></p>

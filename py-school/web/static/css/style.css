@@ -1,0 +1,175 @@
+/* style.css — оформление учебной платформы «Python-Школа» */
+
+:root {
+  --bg: #1e1e2e;
+  --surface: #313244;
+  --surface2: #45475a;
+  --text: #cdd6f4;
+  --muted: #a6adc8;
+  --accent: #89b4fa;
+  --green: #a6e3a1;
+  --red: #f38ba8;
+  --yellow: #f9e2af;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---------- Шапка ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 24px;
+  background: var(--surface);
+  box-shadow: 0 2px 8px rgba(0,0,0,.35);
+  flex-wrap: wrap;
+}
+.logo { font-size: 1.3rem; font-weight: 700; color: var(--green); }
+.nav { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.nav-user { color: var(--yellow); }
+.inline { display: inline; }
+.link-btn {
+  background: none; border: none; color: var(--red);
+  cursor: pointer; font: inherit; padding: 0;
+}
+.link-btn:hover { text-decoration: underline; }
+
+/* ---------- Контейнер ---------- */
+.container { flex: 1; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px; }
+
+.footer {
+  padding: 16px 24px;
+  background: var(--surface);
+  color: var(--muted);
+  text-align: center;
+  font-size: .9rem;
+}
+
+/* ---------- Типографика / утилиты ---------- */
+h1, h2, h3 { color: var(--text); }
+.muted { color: var(--muted); }
+.small { font-size: .85rem; }
+.accent { color: var(--accent); }
+code {
+  background: #11111b; color: var(--green);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+.card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 14px 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,.25);
+}
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 800px) { .grid-2 { grid-template-columns: 1fr; } }
+
+.row { display: flex; gap: 10px; margin-top: 8px; }
+
+/* ---------- Кнопки и формы ---------- */
+.btn {
+  display: inline-block;
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.btn:hover { filter: brightness(1.15); }
+.btn-primary { background: var(--accent); color: #11111b; font-weight: 600; }
+.btn-danger  { background: var(--red); color: #11111b; }
+.btn-block   { display: block; width: 100%; }
+
+label { display: block; margin: 10px 0 4px; color: var(--muted); }
+input[type=text], input[type=password], input[type=number], textarea {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 4px;
+  border: 1px solid var(--surface2);
+  border-radius: 8px;
+  background: #11111b;
+  color: var(--text);
+  font: inherit;
+}
+input:focus, textarea:focus { outline: 2px solid var(--accent); }
+.check { display: flex; align-items: center; gap: 6px; }
+.check input { width: auto; margin: 0; }
+
+/* ---------- Главная ---------- */
+.hero { text-align: center; padding: 40px 16px; }
+.hero h1 { font-size: 2.2rem; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 800px) { .cards { grid-template-columns: 1fr; } }
+.demo ul { line-height: 1.8; }
+.stats-box {
+  background: #11111b;
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 16px;
+  white-space: pre-wrap;
+  font-family: monospace;
+  color: var(--green);
+}
+
+/* ---------- Вход ---------- */
+.login-wrap { display: flex; justify-content: center; padding-top: 48px; }
+.login-card {
+  background: var(--surface);
+  border-radius: 14px;
+  padding: 28px 32px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.4);
+}
+.alert { padding: 10px 14px; border-radius: 8px; margin-bottom: 12px; }
+.alert-error { background: rgba(243,139,168,.15); color: var(--red); border: 1px solid var(--red); }
+
+/* ---------- Курс (студент) ---------- */
+.course-layout { display: grid; grid-template-columns: 320px 1fr; gap: 20px; }
+@media (max-width: 800px) { .course-layout { grid-template-columns: 1fr; } }
+.sidebar h3 { margin-top: 20px; }
+.lesson-list li { margin: 6px 0; }
+.lesson-view { background: var(--surface); border-radius: 12px; padding: 20px; }
+.lesson-content {
+  background: #11111b;
+  padding: 16px;
+  border-radius: 8px;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  color: var(--text);
+}
+.java-widget textarea { margin-bottom: 8px; }
+
+/* ---------- Таблицы / оценки ---------- */
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { padding: 8px 10px; border-bottom: 1px solid var(--surface2); text-align: left; }
+.grade-input { width: 56px !important; }
+.comment-input { width: 110px !important; }
+.badge {
+  background: var(--accent); color: #11111b;
+  border-radius: 999px; padding: 2px 12px; font-weight: 700;
+}
+.grade-5 { color: var(--green); font-weight: 700; }
+.grade-4 { color: var(--accent); font-weight: 700; }
+.grade-3 { color: var(--yellow); font-weight: 700; }
+.grade-2, .grade-1 { color: var(--red); font-weight: 700; }
+
+.course-form { border-bottom: 1px dashed var(--surface2); padding-bottom: 12px; margin-bottom: 12px; }
