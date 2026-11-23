@@ -1,0 +1,14 @@
+<section class="login-wrap">
+  <form class="login-card" method="post" action="/login">
+    <h1>🐍 Вход в Python-Школу</h1>
+    {%if error%}<div class="alert alert-error">{{error}}</div>{%endif%}
+    <label>Логин
+      <input type="text" name="login" placeholder="например, 123456 или admin" required autofocus>
+    </label>
+    <label>Пароль
+      <input type="password" name="password" placeholder="ваш пароль" required>
+    </label>
+    <button type="submit" class="btn btn-primary btn-block">Войти</button>
+    <p class="muted small">Студенты: 123456 / 12345 / 1234567 (пароль = логин). Учитель: admin / admin.</p>
+  </form>
+</section>

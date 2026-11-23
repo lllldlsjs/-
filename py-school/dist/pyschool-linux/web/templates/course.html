@@ -1,0 +1,39 @@
+<section class="course-layout">
+  <aside class="sidebar">
+    <h2>{{course.title}}</h2>
+    <p class="muted small">{{course.description}}</p>
+
+    <h3>Уроки курса</h3>
+    <ol class="lesson-list">
+      {%for lesson in lessons%}
+      <li><a href="/course?course={{course.id}}&lesson={{lesson.id}}">{{lesson.title}}</a></li>
+      {%endfor%}
+    </ol>
+
+    <h3>Мои оценки</h3>
+    <table class="table small">
+      <tr><th>Курс</th><th>Оценка</th></tr>
+      {%for grade in grades%}
+      <tr><td>{{grade.course_title}}</td><td class="grade-{{grade.grade}}">{{grade.grade}}</td></tr>
+      {%endfor%}
+    </table>
+    <p>Средний балл (посчитан на <b>C++</b>): <span class="badge">{{avg}}</span></p>
+  </aside>
+
+  <article class="lesson-view">
+    {%if has_lesson%}
+    <h1>📖 {{lesson.title}}</h1>
+    <pre class="lesson-content">{{lesson.content}}</pre>
+    {%else%}
+    <h1>Уроков пока нет</h1>
+    <p>Учитель ещё не добавил материалы.</p>
+    {%endif%}
+
+    <div class="java-widget card">
+      <h3>🔢 Счётчик текста (Java-сервис)</h3>
+      <textarea id="ts-input" rows="4" placeholder="Введите любой текст…"></textarea>
+      <button id="ts-btn" class="btn">Посчитать</button>
+      <div id="ts-result" class="muted">Результат появится здесь.</div>
+    </div>
+  </article>
+</section>

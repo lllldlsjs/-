@@ -60,3 +60,21 @@ mono build/StatusProxy.exe 8081              # статус-панель C# (о�
 
 Студенты видят уроки курса и свои оценки; учитель управляет курсами,
 уроками и выставляет оценки. База SQLite создаётся автоматически в `data/school.db`.
+
+## Готовая сборка (папка dist/)
+
+Я собрал проект через CMake и выложил результат в отдельную папку **`py-school/dist/`**:
+
+```
+dist/
+├── pyschool-linux/          # готовая сборка, запускать отсюда
+│   ├── run.sh               # ./run.sh — запускает сайт (8080) и статус-панель (8081)
+│   ├── bin/statusproxy_cpp  # собранный статус-прокси (C++)
+│   ├── lib/libpyschool_helpers.so  # собранная C++-библиотека (ctypes)
+│   ├── share/jar/pyschool_utils.jar# собранный Java-архив
+│   └── src/ web/ scripts/   # код сайта
+└── pyschool-linux.tar.gz    # тот же архив для переноса на другую машину
+```
+
+Запуск без сборки: `tar xzf pyschool-linux.tar.gz && ./pyschool-linux/run.sh`
+(нужен только python3; сборка через cmake не требуется).

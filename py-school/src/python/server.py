@@ -65,7 +65,7 @@ def _fill(tpl, ctx):
         # циклы (например {%for cell in row.cells%} внутри {%for row%})
         # разворачиваются корректно за несколько проходов.
         pattern = re.compile(
-            r"\{%for\s+(\w+)\s+in\s+(\w+)%\}"
+            r"\{%for\s+(\w+)\s+in\s+([\w.]+)%\}"
             r"((?:(?!\{%for\s|\{%endfor%\}).)*?)\{%endfor%\}", re.S)
         while True:
             m = pattern.search(text)
